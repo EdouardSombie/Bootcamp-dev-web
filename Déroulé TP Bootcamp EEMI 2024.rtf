@@ -1,0 +1,405 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2639
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fnil\fcharset0 Menlo-Regular;\f2\fswiss\fcharset0 Helvetica-Oblique;
+\f3\fswiss\fcharset0 Helvetica-Bold;}
+{\colortbl;\red255\green255\blue255;\red109\green109\blue109;\red24\green24\blue24;\red70\green137\blue204;
+\red193\green193\blue193;\red140\green211\blue254;\red194\green126\blue101;\red167\green197\blue152;\red212\green214\blue154;
+\red183\green111\blue179;\red205\green173\blue106;}
+{\*\expandedcolortbl;;\cssrgb\c50196\c50196\c50196;\cssrgb\c12157\c12157\c12157;\cssrgb\c33725\c61176\c83922;
+\cssrgb\c80000\c80000\c80000;\cssrgb\c61176\c86275\c99608;\cssrgb\c80784\c56863\c47059;\cssrgb\c70980\c80784\c65882;\cssrgb\c86275\c86275\c66667;
+\cssrgb\c77255\c52549\c75294;\cssrgb\c84314\c72941\c49020;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww17320\viewh14540\viewkind0
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 1/ Structure html\
+\
+Objectif : cr\'e9er 2 mod\'e8les de pages html\
+\
+- pokedex.html\
+\
+Cette page contient :\
+	- une en-t\'eate (header)\
+		dans ce header, nous mettrons (pour commencer) un bouton contenant un pictogramme.\
+		Note : utiliser un picto \'e0 partir de https://heroicons.com/\
+	- un contenu principal (main) :\
+		- titre de la page\
+		- liste des pokemons*\
+	- un pied de page (footer) avec un copyright\
+\
+*La liste des pokemons contient des blocs (article) avec :\
+	- un titre\
+	- une liste de cat\'e9gories\
+	- une image\
+Note : ces blocs sont cliquables et m\'e8nent vers une autre page (url), utilisaons le chemin "#" pour l'instant.\
+\
+\
+\
+\
+- fiche.html\
+\
+Nous allons cr\'e9er la fiche Bulbizarre, nomm\'e9e fiche_0001.html\
+Note : toutes les fiches seront enregistr\'e9es dans un dossier /fiches\
+\
+\
+Mais avant cela, il serait bien de mettre un peu le pokedex en forme.\
+ce n'est pas grand chose pour qu'il ressemble \'e0 ce que l'on veut :\
+typo, couleur, taille, positionnement\
+\
+0/ Cr\'e9er une feuile de style nomm\'e9e style.css\
+Lier cette feuille de style \'e0 la page html gr\'e2ce \'e0 la balise <link>\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+<\cf4 link\cf5  \cf6 href\cf5 =\cf7 "style.css"\cf5  \cf6 type\cf5 =\cf7 "text/css"\cf5  \cf6 rel\cf5 =\cf7 "stylesheet"\cf2 >\cf5 \cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\
+1/ Taille des \'e9l\'e9ments - width, height, max-width, max-height\
+\
+Ex.  - faire en sorte que toutes les balises img aient une max-width de 100%\
+\
+2/ Marges internes et externes - margin, padding\
+Ex.  \
+- supprimer les puces et les marges internes et externes des listes (balise ul)\
+- modifier la marge interne du body pour une valeur de 16px (ou 1rem)\
+\
+3/ Attributs de texte\
+- supprimer les soulignement des liens (balise a)\
+- faire en sorte que les balises a aient la couleur de texte courante\
+- affecter \'e0 la balise body la famile de police \
+\
+- modifier la typo de la page : utiliser la police Lato de Google fonts pour toute la balise body\
+https://fonts.google.com/specimen/Lato?preview.text=Bulbasaur\
+Nous ne garderons que les styles light, gras et normal (y ompris italique)\
+Les polices seront incorpor\'e9es gr\'e2ce \'e0 une commande @import\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+font-family\cf5 : \cf7 "Lato"\cf5 , \cf7 sans-serif\cf5 ;\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+- modifier la liste pour qu'elle affiche 2 colonnes\
+Mauvaise solution : column-count (pour du texte plut\'f4t)\
+Bonne solution: une flexbox\
+Cf. flexbox froggys\
+\
+faire en sorte que les li de la liste des pokemons aient une width de 50%\
+Conseil: cr\'e9er une classe .pokelist \'e0 mettre sur la balise ul\
+\
+- ajoutons de la couleur \'e0 nos blocs article\
+Plut\'f4t que d'\'e9crire les valeurs "en dur", utilisons des variables du type --couleur-feu, --couleur-plante que l'on d\'e9finit au niveau de la balise body.\
+Ce type d'approche permet de modifier plus facilement le design 
+\f2\i a posteriori
+\f0\i0 \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+--couleur-feu\cf5 : \cf7 #fb6c6c\cf5 ;\cb1 \
+\cf6 \cb3 --couleur-plante\cf5 : \cf7 #48d0b0\cf5 ;\cb1 \
+\cf6 \cb3 --couleur-eau\cf5 : \cf7 #76bdfe\cf5 ;\cb1 \
+\cf6 \cb3 --couleur-insecte\cf5 : \cf7 #ffd86f\cf5 ;\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Utiliser ces variables dans des classes du type .feu, .plante... (\'e0 ajouter \'e0 la structure html)\
+\
+Maintenant que les articles ont une couleur de fond. On se rend compte qu'ils ne font pas tous la m\'eame taille et que l'espacement vertical est trop grand.\
+Cela est caus\'e9 par la marge des balises h2 contenues dans les articles.\
+\
+- Pour \'e9viter que les marges "d\'e9bordent", il suffit de faire de nos articles des flexbox verticales.\
+\
+Il reste des blocs plus petits que les autres, c'est parce que la balise <li> n'est pas "remplie" par son contenant. Pour changer cela, donner une height de 100% aux balises a et articles qui s'y trouvent.\
+\
+Maintenant que tous les blocs sont bien positionn\'e9s, modifions leur contenu.\
+Nous allons appliquer les styles suibvants aux articles dans la pokelist :\
+- bords arrondis (border-radius) de 16px (1rem)\
+- marge interne de 16px (1rem)\
+- pas de marges externes sur les titres\
+\
+Aie ! le padding ajout\'e9 aux articles les a agrandi !\
+Pour \'e9viter ce comportement par d\'e9faut en css, la formule magique :\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf4 \cb3 \expnd0\expndtw0\kerning0
+*\cf5  \{\cf6 box-sizing\cf5 : \cf7 border-box\cf5 ;\}\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Continuons:\
+- les articles ont une couleur de texte blanche\
+- modifier les tailles de texte : balise h2 \'e0 16px (1rem) et h3 \'e0 12px (0.75rem)\
+\
+Modifions maintenant l'aspect de notre list de type.\
+Vu que l'on va r\'e9utiliser cette liste sur d'autres pages, nous allons cr\'e9er une classe .typelist\
+Il faut ajouter cette classe \'e0 tous les \'e9l\'e9ments html concern\'e9s.\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+<\cf4 ul\cf5  \cf6 class\cf5 =\cf7 "typelist"\cf2 >
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 Une fois que c'est fait, modifions l'aspect de cette classe :\
+- la typelist est une flexbox verticale avec un gap de 4px (0.25rem)\
+- sa taille de police est 12px (0.75rem)\
+- ses balises li ont une background-color blanc \'e0 30% d'opacit\'e9 et un border raius de 12px (0.75rem)\
+\
+Attention : les styles que l'on a d\'e9j\'e0 mis sur les <li> de la pokelist s'appliquent aux <li> de notre typelist.\
+Pour rem\'e9dier \'e0 ce probl\'e8me, utilisons un s\'e9lecteur css plus pr\'e9cis pour les <li> de la pokelist, le s\'e9lecteur d'enfant direct ( > )\
+\
+Retour \'e0 la typelist :\
+- elle aligne ses enfant \'e0 gauche sur l'axe secondaire\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+align-items\cf5 : \cf7 flex-start\cf5 ;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 - ajouter un padding de 2px (0.125rem) en haut et en bas et un padding de 8px (0.5rem) en  aux <li> de cette liste\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+padding\cf5 : \cf8 0.125rem\cf5  \cf8 0.5rem\cf5 ;\
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 - ajouter une marge externe de 8px en haut de la liste.
+\f1 \cf5 \expnd0\expndtw0\kerning0
+\
+\
+\
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 Maintenant, nous allons positionner l'image, de mani\'e9re \'e0 la "caler" en bas \'e0 droite du bloc.\
+Pour cela, nous allons utiliser un positionnement absolu.\
+\
+Il faut s'assurer que l'image se positionne par rapport \'e0 son parent s'il est lui-m\'eame positionn\'e9.\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+position\cf5 : \cf7 relative\cf5 ;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Maintenant que l'image est en "absolute", les autres \'e9l\'e9ments ne la prennent plus en compte pour se dimensionner et se positionner.\
+\
+Faisons en sorte que notre image soit toujours contenu dans le bloc :\
+- r\'e9duire la largeur de l'image \'e0 50%\
+\
+Attention : l'image passe par-dessus le texte ! C'est parce qu'un \'e9l\'e9m\'e9nt passe toujours au-dessus d'un \'e9l\'e9ment qui ne l'est pas. Pour cela, faisons en sorte que tous (*) les \'e9l\'e9ments du blocs aient une position relative.\
+Maintent que tous les \'e9l\'e9ments sont positionn\'e9s, nous pouvons modifer leur valeur z-index.\
+Il faut juste que l'image aient le z-index le plus petit...\
+\
+- Positionnons l'image en bas, \'e0 droite du bloc (bottom, right)\
+\
+Nous ne sommes plus tr\'e8s loin...\
+Am\'e9liorons un peu l'aspect des blocs :\
+- r\'e9duire l\'e9g\'e9rement la graisse du h3 (normal au lieu de bold)\
+- r\'e9duire la taille de police de la type liste : 10px (0.625rem) ainsi sa hauteur de ligne\
+- caler les images \'e0 4px des bords droit et bas\
+- leur donner une hauteur minimum de 112px (7rem) pour s'assurer qu'ils n'y en aura pas de trop petits.\
+\
+Pour faire ressortir davantage l'image, nous allons placer derri\'e8re un pictogramme.\
+Nous allons utiliser l'image PokeBall_icon.svg situ\'e9e dans le dossier /pictogrammes\
+\
+Ajoutons une ombre port\'e9e aux blocs \
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+box-shadow\cf5 : \cf8 0\cf5  \cf8 2px\cf5  \cf8 6px\cf5  \cf9 rgba\cf5 (\cf8 0\cf5 , \cf8 0\cf5 , \cf8 0\cf5 , \cf8 0.2\cf5 );\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Avant de passer \'e0 la suite, regardons comment se comporte notre page sur un \'e9cran d'ordinateur...\
+Il faut modifier la largeur des blocs en fonction de la largeur de l'\'e9cran.\
+Nous allons utiliser pour cela des media queries 
+\f1 \cf10 \cb3 \expnd0\expndtw0\kerning0
+@media
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0  pour les diff\'e9rentes tailles d'\'e9cran (breakpoints)\
+Breakpoints conseill\'e9s : 640px, 960px et 1280px.\
+\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf5 \expnd0\expndtw0\kerning0
+\
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 La liste r\'e9agit bien sur les diff\'e9rents \'e9crans mais les images d\'e9bordent parfois du bloc.\
+Pour \'e9viter cela, nous allons leur donner une hauteur max de 90%\
+Attention: l'image peut se retrouver d\'e9form\'e9e. Pour \'e9viter cela, utilisons la propri\'e9t\'e9 suivante :\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+object-fit\cf5 : \cf7 contain\cf5 ;\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0  \
+\
+Ca y est, notre pokelist est telle que voulue et responsive !\
+Nous y reviendrons pour ajouter des effets au survol.\
+D'ici l\'e0, ajoutons lui une marge externe de 32px (2rem) en haut et en bas.\
+\
+\
+Maintenant, passons au header de la page.\
+\
+- supprimer tous les styles par d\'e9faut de toutes les balises button (bg-color, border, padding)\
+- faire du header une flexbox horizontale align\'e9e \'e0 droite\
+\
+Ajoutons une image derri\'e8re le bouton.\
+il y a plusieurs mani\'e8res d'obtenir ce r\'e9sultat.\
+La plus "solide" est d'ajouter un bloc contenant l'image qui va venir se positionner de fa\'e7on absolue \'e0 droite du header.\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf5 \cb3 \expnd0\expndtw0\kerning0
+&::after \{\cb1 \
+\cb3         \cf7 content\cf5 : \cf7 ""\cf5 ;\cb1 \
+\cb3         \cf6 display\cf5 : \cf7 block\cf5 ;\cb1 \
+\cb3         \cf6 position\cf5 : \cf7 absolute\cf5 ;\cb1 \
+\cb3         \cf6 width\cf5 : \cf8 15rem\cf5 ;\cb1 \
+\cb3         \cf6 height\cf5 : \cf8 15rem\cf5 ;\
+\}\cb1 \
+\pard\pardeftab720\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Une fois que l'image est positionn\'e9e, la page se retrouve plus grande que l'\'e9cran... on a une barre de scroll horizontal.\
+Pour cacher les \'e9l\'e9ments qui d\'e9bordent d'un bloc, on utilise les propri\'e9t\'e9s 
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+overflow, overflow-x, overflow-y\cf5 \cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 Lorsque l'on applique cette r\'e8gle au body, le r\'e9sultat n'est pas toujours celui attendu. Donc nous allons mettre tout le contenu de la page dans une balise div avec la classe .container\
+C'est sur cette div que nous allons appliquer la r\'e8gle 
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+overflow-x\cf5 : \cf7 hidden\cf5 ;\cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 Comme on a chang\'e9 le balisage html, il va falloir ajuster les valeurs de margin et de padding.\
+\
+\
+Animations et transitions \
+Maintenant que notre page est compatible avec un affichage d'ordinateur, ajoutons des effets au survol.\
+Pour changer l'aspect d'un \'e9l\'e9ment au survol : 
+\f1 \cf5 \cb3 \expnd0\expndtw0\kerning0
+&\cf11 :hover\cf5  \{...\}\cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 Utilisons ce s\'e9lecteur pour que les images des blocs soient plus grandes au survol. 
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+transform\cf5 : \cf9 scale\cf5 (\cf8 1.3\cf5 );\cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 Modifions maintenant le bloc pour que rien ne d\'e9passe (overflow)\
+L'effet au survol fonctionne bien mais manque de fluidit\'e9. Ajoutons une transition de 0.5s sur la propri\'e9t\'e9 transform.\
+\
+C'est quand m\'eame mieux comme \'e7a.\
+On peut \'e9galement modifier la position et la taille du pictogramme en arri\'e8re plan lors du survol :)\
+\
+\
+\
+\
+\
+Deuxi\'e8me page\
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+\cf0 fiche_0001.html\
+\
+C'est le moment de cr\'e9er le mod\'e8le de page qui affichera chaque pokemon.\
+Nous allons le faire pour le pokemon 0001\
+\
+1/ Ecrire le balisage html\
+header, main, footer\
+Pour le contenu, commenc\'e7ons par reprendre ce qu'il y avait dans le bloc de la pokelist\
+\
+Arr\'e9tons-nous une fois l'image int\'e9gr\'e9e. \
+Appliquons maintenant la feuille de style d\'e9j\'e0 cr\'e9\'e9e gr\'e2ce \'e0 la balise <link>\
+Ah... on voit qu'il serait bien de tout mettre dans une div .container comme sur la page pokedex.\
+Profitons-en pour ajouter la classe .plante \'e0 cette div.\
+\
+- modifier la classe .plante pour que son texte et ses pictos svg soient en blanc \
+- modifier le header pour que les boutons soient \'e0 gauche et \'e0 droite\
+\
+Nous allons cr\'e9er des styles sp\'e9cifiques \'e0 l'affichage des fiches.\
+Pour simplifier les choses, nous allons cr\'e9er une classe .fiche dans laquelle nous d\'e9finirons l'aspect de certains \'e9l\'e9ments.\
+Nous appliquerons cette classe au container de la page.\
+- retirer la marge externe entre le titre <h1> et le sous-titre <h2>\
+- la .typelist est en ligne (row) et a une font-size de 16px (1rem)\
+On se rend compte que le gap et le padding sont rest\'e9s petits... il vaut mieux les exprim\'e9s avec l'unit\'e9 em ( = 1x la taille de police du parent)\
+On peut \'e9galement am\'e9liorer l'aspect des \'e9l\'e9ments de la liste en augmentant leur hauteur de ligne 
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+line-height\cf5 : \cf8 1.5\cf5 ;\cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+Pour centrer l'image, nous allons la mettre dans une div avec la classe .image-wrapper\
+- Cette div a le texte centr\'e9. L'img qui est dedans a une largeur max de 240px (15rem)\
+\
+On constate que la fiche avec son fond vers est moins haute que l'\'e9cran...\
+Pour remedier \'e0 cela, donnons \'e0 la classe .fiche une hauteur minimum \'e9gale \'e0 celle du viewport (100vh)\
+\
+Ajoutons un bloc d'infos : une div avec la classe .infos\
+La classe .infos a un fond blanc, un padding de 24px (1.5rem) et des bords arrondis en haut de 24px (1.5rem) \
+\
+On se rend compte que le bloc infos ne va pas d'un bout \'e0 l'autre de l'\'e9cran car il est dans un \'e9l\'e9ment qui a du padding.\
+Pour rem\'e9dier \'e0 cela, nous allons donner une marge externe n\'e9gative \'e0 notre bloc infos pour qu'il "d\'e9borde" de son parent (si, si, \'e7a se fait :-)\
+\
+L'image passe en dessous du bloc infos s'ils se chevauchent. Pour \'e9viter cela, il faut positionner l'image 
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+position\cf5 : \cf7 relative\cf5 ;
+\f0 \cf0 \cb1 \kerning1\expnd0\expndtw0 \
+\
+Note : On peut faire en sorte que le bloc d'infos prenne toute la place disponible gr\'e2ce \'e0 du display: flex et du flex-grow:1...\
+Laissons cela de c\'f4t\'e9, en partant du principe que le contenu occupera toujours l'espace libre.\
+N\'e9anmoins, ce syst\'e8me flexible est pr\'e9sent\'e9 dans le fichier de correction.\
+\
+\
+Remplir le contenu du bloc d'infos\
+- une navigation pour les onglets\
+- un tableau pour les donn\'e9es\
+\
+\
+Pour aller plus loin avec le css\
+\
+- ajouter une animation sur l'image ou le bloc d'info de la fiche (transform, opacity...)\
+- on peut aussi animer la couleur d'arri\'e8re-plan de la page.\
+\
+\
+\
+\
+\
+// Ajoutons davantage de r\'e9activit\'e9 avec 
+\f3\b javascript
+\f0\b0 \
+\
+Cr\'e9er un fichier main.js, c'est dans ce fichier que nous \'e9crirons notre code js.\
+Lier ce fichier \'e0 nos pages html\
+\
+1/ Ecouter des \'e9v\'e9nements et lancer une action\
+\
+- au clic sur le c\'9cur, celui-ci obtient la classe .active\
+- si on clique \'e0 nouveau sur le c\'9cur, celui-perd la classe .active\
+Note: pour ajouter un \'e9couteur de clic sur le bouton c\'9cur, il faaut le s\'e9lectionner par un id 
+\f1 \cf2 \cb3 \expnd0\expndtw0\kerning0
+<\cf4 button\cf5  \cf6 id\cf5 =\cf7 "like-btn"\cf2 >\cf5 \cb1 \
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+- lorsque l'on scrolle, l'image se r\'e9duit : elle passe d'une max-width de 15rem \'e0 10rem\
+Il faut \'e9couter l'\'e9v\'e9nement "scroll" sur la window\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+window\cf5 .\cf9 addEventListener\cf5 (\cf7 "scroll"\cf5 , \cf4 function\cf5  (\cf6 event\cf5 ) \{...\})\
+\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 On peut s\'e9lectionner tout \'e9l\'e9ment de la page grace \'e0 la fonction querySelector()\
+\pard\pardeftab720\partightenfactor0
+
+\f1 \cf6 \cb3 \expnd0\expndtw0\kerning0
+document\cf5 .\cf9 querySelector\cf5 (\cf7 "#image-wrapper img"\cf5 )\cb1 \
+\pard\tx566\tx1133\tx1700\tx2267\tx2834\tx3401\tx3968\tx4535\tx5102\tx5669\tx6236\tx6803\pardirnatural\partightenfactor0
+
+\f0 \cf0 \kerning1\expnd0\expndtw0 \
+\
+- ajouter un \'e9couteur de clic sur les \'e9l\'e9ments de navigation du bloc d'infos\
+Au clic, l'\'e9l\'e9ment re\'e7oit la classe .active et affiche l'onglet correspondant (propri\'e9t\'e9 css visibility)\
+\
+\
+// Possibilit\'e9s pour continuer :\
+\
+- ajouter une nav principale \'e0 la page pokedex.html\
+dans le html, ajouter une balise <nav> avec une liste de liens\
+\
+- cr\'e9er la liste \'e0 partir d'un json (fetch ou variable, parcourir un objet, cr\'e9ation d'\'e9l\'e9ments)\
+- cr\'e9er une pagination, un filtre...}
