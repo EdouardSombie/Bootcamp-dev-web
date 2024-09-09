@@ -1,0 +1,94 @@
+Bulbizarre Nº 0001
+
+Catégorie Graine
+Talent Engrais
+Taille 0,7 m
+Poids 6,9 kg
+Sexe M F
+
+Type Plante / Poison
+Faiblesse(s) Feu / Glace / Vol / Psy
+
+Description :
+Au début de sa vie, il se nourrit des nutriments accumulés dans la graine sur son dos. Cela lui permet de grandir.
+
+PV: 3/15
+Attaque: 3/15
+Défense: 3/15
+Attaque Spéciale: 4/15
+Défense Spéciale: 4/15
+Vitesse: 3/15 
+
+
+
+Herbizarre Nº 0002
+
+Catégorie Graine
+Talent Engrais
+Taille 1,0 m
+Poids 13,0 kg
+Sexe M F
+
+Type Plante / Poison
+Faiblesse(s) Feu / Glace / Vol / Psy
+
+Description :
+Plus il s’expose au soleil, plus il emmagasine d’énergie, ce qui permet au bourgeon sur son dos de se développer.
+
+PV: 4/15
+Attaque: 4/15
+Défense: 4/15
+Attaque Spéciale: 5/15
+Défense Spéciale: 5/15
+Vitesse: 4/15 
+
+
+Florizarre Nº 0003
+
+Catégorie Graine
+Talent Engrais
+Taille 2,0 m
+Poids 100 kg
+Sexe M F
+
+Type Plante / Poison
+Faiblesse(s) Feu / Glace / Vol / Psy
+
+Description :
+Ce Pokémon est capable de transformer la lumière du soleil en énergie. Il est donc encore plus fort en été.
+
+PV: 5/15
+Attaque: 5/15
+Défense: 5/15
+Attaque Spéciale: 6/15
+Défense Spéciale: 6/15
+Vitesse: 5/15 
+
+
+
+Salamèche Nº 0004
+Type Feu
+
+Reptincel Nº 0005
+Type Feu
+
+Dracaufeu Nº 0006
+Type Feu / Vol
+
+Carapuce Nº 0007
+Type Eau
+
+Carabaffe Nº 0008
+Type Eau
+
+Tortank Nº 0009
+Type Eau
+
+Chenipan Nº 0010
+Type Insecte
+
+Chrysacier Nº 0011
+Type Insecte
+
+Papilusion Nº 0012
+Type Insecte / Vol
