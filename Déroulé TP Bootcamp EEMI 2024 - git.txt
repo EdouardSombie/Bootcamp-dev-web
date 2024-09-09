@@ -1,0 +1,291 @@
+1/ Structure html
+
+Objectif : créer 2 modèles de pages html
+
+- pokedex.html
+
+Cette page contient :
+	- une en-tête (header)
+		dans ce header, nous mettrons (pour commencer) un bouton contenant un pictogramme.
+		Note : utiliser un picto à partir de https://heroicons.com/
+	- un contenu principal (main) :
+		- titre de la page
+		- liste des pokemons*
+	- un pied de page (footer) avec un copyright
+
+*La liste des pokemons contient des blocs (article) avec :
+	- un titre
+	- une liste de catégories
+	- une image
+Note : ces blocs sont cliquables et mènent vers une autre page (url), utilisaons le chemin "#" pour l'instant.
+
+
+
+
+- fiche.html
+
+Nous allons créer la fiche Bulbizarre, nommée fiche_0001.html
+Note : toutes les fiches seront enregistrées dans un dossier /fiches
+
+
+Mais avant cela, il serait bien de mettre un peu le pokedex en forme.
+ce n'est pas grand chose pour qu'il ressemble à ce que l'on veut :
+typo, couleur, taille, positionnement
+
+0/ Créer une feuile de style nommée style.css
+Lier cette feuille de style à la page html grâce à la balise <link>
+<link href="style.css" type="text/css" rel="stylesheet">
+
+
+1/ Taille des éléments - width, height, max-width, max-height
+
+Ex.  - faire en sorte que toutes les balises img aient une max-width de 100%
+
+2/ Marges internes et externes - margin, padding
+Ex.  
+- supprimer les puces et les marges internes et externes des listes (balise ul)
+- modifier la marge interne du body pour une valeur de 16px (ou 1rem)
+
+3/ Attributs de texte
+- supprimer les soulignement des liens (balise a)
+- faire en sorte que les balises a aient la couleur de texte courante
+- affecter à la balise body la famile de police 
+
+- modifier la typo de la page : utiliser la police Lato de Google fonts pour toute la balise body
+https://fonts.google.com/specimen/Lato?preview.text=Bulbasaur
+Nous ne garderons que les styles light, gras et normal (y ompris italique)
+Les polices seront incorporées grâce à une commande @import
+font-family: "Lato", sans-serif;
+
+- modifier la liste pour qu'elle affiche 2 colonnes
+Mauvaise solution : column-count (pour du texte plutôt)
+Bonne solution: une flexbox
+Cf. flexbox froggys
+
+faire en sorte que les li de la liste des pokemons aient une width de 50%
+Conseil: créer une classe .pokelist à mettre sur la balise ul
+
+- ajoutons de la couleur à nos blocs article
+Plutôt que d'écrire les valeurs "en dur", utilisons des variables du type --couleur-feu, --couleur-plante que l'on définit au niveau de la balise body.
+Ce type d'approche permet de modifier plus facilement le design a posteriori
+--couleur-feu: #fb6c6c;
+--couleur-plante: #48d0b0;
+--couleur-eau: #76bdfe;
+--couleur-insecte: #ffd86f;
+
+Utiliser ces variables dans des classes du type .feu, .plante... (à ajouter à la structure html)
+
+Maintenant que les articles ont une couleur de fond. On se rend compte qu'ils ne font pas tous la même taille et que l'espacement vertical est trop grand.
+Cela est causé par la marge des balises h2 contenues dans les articles.
+
+- Pour éviter que les marges "débordent", il suffit de faire de nos articles des flexbox verticales.
+
+Il reste des blocs plus petits que les autres, c'est parce que la balise <li> n'est pas "remplie" par son contenant. Pour changer cela, donner une height de 100% aux balises a et articles qui s'y trouvent.
+
+Maintenant que tous les blocs sont bien positionnés, modifions leur contenu.
+Nous allons appliquer les styles suibvants aux articles dans la pokelist :
+- bords arrondis (border-radius) de 16px (1rem)
+- marge interne de 16px (1rem)
+- pas de marges externes sur les titres
+
+Aie ! le padding ajouté aux articles les a agrandi !
+Pour éviter ce comportement par défaut en css, la formule magique :
+* {box-sizing: border-box;}
+
+Continuons:
+- les articles ont une couleur de texte blanche
+- modifier les tailles de texte : balise h2 à 16px (1rem) et h3 à 12px (0.75rem)
+
+Modifions maintenant l'aspect de notre list de type.
+Vu que l'on va réutiliser cette liste sur d'autres pages, nous allons créer une classe .typelist
+Il faut ajouter cette classe à tous les éléments html concernés.
+<ul class="typelist">
+Une fois que c'est fait, modifions l'aspect de cette classe :
+- la typelist est une flexbox verticale avec un gap de 4px (0.25rem)
+- sa taille de police est 12px (0.75rem)
+- ses balises li ont une background-color blanc à 30% d'opacité et un border raius de 12px (0.75rem)
+
+Attention : les styles que l'on a déjà mis sur les <li> de la pokelist s'appliquent aux <li> de notre typelist.
+Pour remédier à ce problème, utilisons un sélecteur css plus précis pour les <li> de la pokelist, le sélecteur d'enfant direct ( > )
+
+Retour à la typelist :
+- elle aligne ses enfant à gauche sur l'axe secondaire
+align-items: flex-start;
+- ajouter un padding de 2px (0.125rem) en haut et en bas et un padding de 8px (0.5rem) en  aux <li> de cette liste
+padding: 0.125rem 0.5rem;
+- ajouter une marge externe de 8px en haut de la liste.
+
+
+Maintenant, nous allons positionner l'image, de maniére à la "caler" en bas à droite du bloc.
+Pour cela, nous allons utiliser un positionnement absolu.
+
+Il faut s'assurer que l'image se positionne par rapport à son parent s'il est lui-même positionné.
+position: relative;
+
+Maintenant que l'image est en "absolute", les autres éléments ne la prennent plus en compte pour se dimensionner et se positionner.
+
+Faisons en sorte que notre image soit toujours contenu dans le bloc :
+- réduire la largeur de l'image à 50%
+
+Attention : l'image passe par-dessus le texte ! C'est parce qu'un élémént passe toujours au-dessus d'un élément qui ne l'est pas. Pour cela, faisons en sorte que tous (*) les éléments du blocs aient une position relative.
+Maintent que tous les éléments sont positionnés, nous pouvons modifer leur valeur z-index.
+Il faut juste que l'image aient le z-index le plus petit...
+
+- Positionnons l'image en bas, à droite du bloc (bottom, right)
+
+Nous ne sommes plus très loin...
+Améliorons un peu l'aspect des blocs :
+- réduire légérement la graisse du h3 (normal au lieu de bold)
+- réduire la taille de police de la type liste : 10px (0.625rem) ainsi sa hauteur de ligne
+- caler les images à 4px des bords droit et bas
+- leur donner une hauteur minimum de 112px (7rem) pour s'assurer qu'ils n'y en aura pas de trop petits.
+
+Pour faire ressortir davantage l'image, nous allons placer derrière un pictogramme.
+Nous allons utiliser l'image PokeBall_icon.svg située dans le dossier /pictogrammes
+
+Ajoutons une ombre portée aux blocs 
+box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+
+Avant de passer à la suite, regardons comment se comporte notre page sur un écran d'ordinateur...
+Il faut modifier la largeur des blocs en fonction de la largeur de l'écran.
+Nous allons utiliser pour cela des media queries @media pour les différentes tailles d'écran (breakpoints)
+Breakpoints conseillés : 640px, 960px et 1280px.
+
+
+La liste réagit bien sur les différents écrans mais les images débordent parfois du bloc.
+Pour éviter cela, nous allons leur donner une hauteur max de 90%
+Attention: l'image peut se retrouver déformée. Pour éviter cela, utilisons la propriété suivante :
+object-fit: contain;
+ 
+
+Ca y est, notre pokelist est telle que voulue et responsive !
+Nous y reviendrons pour ajouter des effets au survol.
+D'ici là, ajoutons lui une marge externe de 32px (2rem) en haut et en bas.
+
+
+Maintenant, passons au header de la page.
+
+- supprimer tous les styles par défaut de toutes les balises button (bg-color, border, padding)
+- faire du header une flexbox horizontale alignée à droite
+
+Ajoutons une image derrière le bouton.
+il y a plusieurs manières d'obtenir ce résultat.
+La plus "solide" est d'ajouter un bloc contenant l'image qui va venir se positionner de façon absolue à droite du header.
+&::after {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 15rem;
+        height: 15rem;
+}
+
+Une fois que l'image est positionnée, la page se retrouve plus grande que l'écran... on a une barre de scroll horizontal.
+Pour cacher les éléments qui débordent d'un bloc, on utilise les propriétés overflow, overflow-x, overflow-y
+Lorsque l'on applique cette règle au body, le résultat n'est pas toujours celui attendu. Donc nous allons mettre tout le contenu de la page dans une balise div avec la classe .container
+C'est sur cette div que nous allons appliquer la règle overflow-x: hidden;
+Comme on a changé le balisage html, il va falloir ajuster les valeurs de margin et de padding.
+
+
+Animations et transitions 
+Maintenant que notre page est compatible avec un affichage d'ordinateur, ajoutons des effets au survol.
+Pour changer l'aspect d'un élément au survol : &:hover {...}
+Utilisons ce sélecteur pour que les images des blocs soient plus grandes au survol. transform: scale(1.3);
+Modifions maintenant le bloc pour que rien ne dépasse (overflow)
+L'effet au survol fonctionne bien mais manque de fluidité. Ajoutons une transition de 0.5s sur la propriété transform.
+
+C'est quand même mieux comme ça.
+On peut également modifier la position et la taille du pictogramme en arrière plan lors du survol :)
+
+
+
+
+
+Deuxième page
+fiche_0001.html
+
+C'est le moment de créer le modèle de page qui affichera chaque pokemon.
+Nous allons le faire pour le pokemon 0001
+
+1/ Ecrire le balisage html
+header, main, footer
+Pour le contenu, commencçons par reprendre ce qu'il y avait dans le bloc de la pokelist
+
+Arrétons-nous une fois l'image intégrée. 
+Appliquons maintenant la feuille de style déjà créée grâce à la balise <link>
+Ah... on voit qu'il serait bien de tout mettre dans une div .container comme sur la page pokedex.
+Profitons-en pour ajouter la classe .plante à cette div.
+
+- modifier la classe .plante pour que son texte et ses pictos svg soient en blanc 
+- modifier le header pour que les boutons soient à gauche et à droite
+
+Nous allons créer des styles spécifiques à l'affichage des fiches.
+Pour simplifier les choses, nous allons créer une classe .fiche dans laquelle nous définirons l'aspect de certains éléments.
+Nous appliquerons cette classe au container de la page.
+- retirer la marge externe entre le titre <h1> et le sous-titre <h2>
+- la .typelist est en ligne (row) et a une font-size de 16px (1rem)
+On se rend compte que le gap et le padding sont restés petits... il vaut mieux les exprimés avec l'unité em ( = 1x la taille de police du parent)
+On peut également améliorer l'aspect des éléments de la liste en augmentant leur hauteur de ligne line-height: 1.5;
+
+Pour centrer l'image, nous allons la mettre dans une div avec la classe .image-wrapper
+- Cette div a le texte centré. L'img qui est dedans a une largeur max de 240px (15rem)
+
+On constate que la fiche avec son fond vers est moins haute que l'écran...
+Pour remedier à cela, donnons à la classe .fiche une hauteur minimum égale à celle du viewport (100vh)
+
+Ajoutons un bloc d'infos : une div avec la classe .infos
+La classe .infos a un fond blanc, un padding de 24px (1.5rem) et des bords arrondis en haut de 24px (1.5rem) 
+
+On se rend compte que le bloc infos ne va pas d'un bout à l'autre de l'écran car il est dans un élément qui a du padding.
+Pour remédier à cela, nous allons donner une marge externe négative à notre bloc infos pour qu'il "déborde" de son parent (si, si, ça se fait :-)
+
+L'image passe en dessous du bloc infos s'ils se chevauchent. Pour éviter cela, il faut positionner l'image position: relative;
+
+Note : On peut faire en sorte que le bloc d'infos prenne toute la place disponible grâce à du display: flex et du flex-grow:1...
+Laissons cela de côté, en partant du principe que le contenu occupera toujours l'espace libre.
+Néanmoins, ce système flexible est présenté dans le fichier de correction.
+
+
+Remplir le contenu du bloc d'infos
+- une navigation pour les onglets
+- un tableau pour les données
+
+
+Pour aller plus loin avec le css
+
+- ajouter une animation sur l'image ou le bloc d'info de la fiche (transform, opacity...)
+- on peut aussi animer la couleur d'arrière-plan de la page.
+
+
+
+
+
+// Ajoutons davantage de réactivité avec javascript
+
+Créer un fichier main.js, c'est dans ce fichier que nous écrirons notre code js.
+Lier ce fichier à nos pages html
+
+1/ Ecouter des événements et lancer une action
+
+- au clic sur le cœur, celui-ci obtient la classe .active
+- si on clique à nouveau sur le cœur, celui-perd la classe .active
+Note: pour ajouter un écouteur de clic sur le bouton cœur, il faaut le sélectionner par un id <button id="like-btn">
+
+- lorsque l'on scrolle, l'image se réduit : elle passe d'une max-width de 15rem à 10rem
+Il faut écouter l'événement "scroll" sur la window
+window.addEventListener("scroll", function (event) {...})
+
+On peut sélectionner tout élément de la page grace à la fonction querySelector()
+document.querySelector("#image-wrapper img")
+
+
+- ajouter un écouteur de clic sur les éléments de navigation du bloc d'infos
+Au clic, l'élément reçoit la classe .active et affiche l'onglet correspondant (propriété css visibility)
+
+
+// Possibilités pour continuer :
+
+- ajouter une nav principale à la page pokedex.html
+dans le html, ajouter une balise <nav> avec une liste de liens
+
+- créer la liste à partir d'un json (fetch ou variable, parcourir un objet, création d'éléments)
+- créer une pagination, un filtre...
